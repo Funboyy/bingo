@@ -1,0 +1,89 @@
+.wrapper {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .container {
+    width: 40%;
+    height: 75%;
+    space-between-entries: 15;
+
+    left: 50%;
+    top: 50%;
+
+    alignment-x: center;
+    alignment-y: center;
+
+    padding: 25;
+
+    background-color: rgba(0, 0, 0, 0.25);
+
+    .title {
+      alignment-x: center;
+    }
+
+    Scroll {
+      height: fit-content;
+
+      .list {
+        left: 0;
+        top: 0;
+        height: fit-content;
+        space-between-entries: 2;
+        selectable: false;
+
+        WayPoint {
+          height: 24;
+          padding: 1;
+
+          border: 1 dark_gray;
+          background-color: rgba(0, 0, 0, 0.5);
+
+          .icon {
+            left: 2;
+            top: 2;
+            width: 16;
+            height: width;
+            clickable: false;
+
+            margin-top: 2;
+          }
+
+          .name {
+            left: 20;
+            top: 7;
+          }
+
+          .button {
+            right: 2;
+            top: 2;
+            height: 20;
+          }
+        }
+      }
+
+      Scrollbar {
+        left: 0;
+        top: 0;
+        width: 5;
+        height: 100%;
+        margin-left: 5;
+      }
+    }
+
+    .buttonWrapper {
+      width: 100%;
+      padding: 10;
+
+      .button {
+        width: 60%;
+        height: 20;
+        alignment-x: center;
+        alignment-y: center;
+      }
+    }
+  }
+}

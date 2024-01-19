@@ -1,0 +1,23 @@
+FlexibleContent {
+  top: 0;
+  left: 0;
+  height: 128;
+  width: 128;
+  min-height: 128;
+  max-height: 128;
+  min-width: 128;
+  max-width: 128;
+
+  Div {
+    height: 128;
+    width: 128;
+
+    Icon {
+      width: 128;
+      height: 128;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
+  }
+}

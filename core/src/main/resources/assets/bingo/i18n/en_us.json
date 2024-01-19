@@ -1,0 +1,55 @@
+{
+  "bingo": {
+    "settings": {
+      "name": "Bingo",
+      "enabled": {
+        "name": "Enabled"
+      },
+      "highlight": {
+        "name": "Highlighting"
+      },
+      "autoGG": {
+        "name": "AutoGG"
+      },
+      "refreshButton": {
+        "name": "Custom Difficulties",
+        "text": "Refresh",
+        "notification": "Reloading custom difficulties..."
+      },
+      "wayPoints": {
+        "name": "Enabled"
+      },
+      "showOthers": {
+        "name": "Show from others"
+      },
+      "color": {
+        "name": "Color"
+      },
+      "createKey": {
+        "name": "Create"
+      },
+      "manageKey": {
+        "name": "Manage"
+      },
+      "header": {
+        "features": {
+          "name": "Features"
+        },
+        "wayPoints": {
+          "name": "WayPoints"
+        }
+      }
+    },
+    "hudWidget": {
+      "bingoCard": {
+        "name": "Bingo Card"
+      }
+    },
+    "activity": {
+      "wayPoint": {
+        "name": "Select a name for the waypoint",
+        "manage": "Manage WayPoints"
+      }
+    }
+  }
+}

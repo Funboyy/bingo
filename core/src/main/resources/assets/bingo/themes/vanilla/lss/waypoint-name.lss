@@ -1,0 +1,40 @@
+.wrapper {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .container {
+    width: 40%;
+    height: fit-content;
+    space-between-entries: 15;
+
+    left: 50%;
+    top: 50%;
+
+    alignment-x: center;
+    alignment-y: center;
+
+    padding: 25;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .title {
+      alignment-x: center;
+    }
+
+    .buttonWrapper {
+
+      padding: 10;
+
+      .button {
+        width: 60%;
+        height: 20;
+        alignment-x: center;
+        alignment-y: center;
+      }
+    }
+  }
+}
