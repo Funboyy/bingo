@@ -192,8 +192,9 @@ public class DefaultWayPointService implements WayPointService {
   public void removeWayPoints() {
     for (final WayPoint wayPoint : this.wayPoints) {
       this.worldObjectRegistry.unregister(v -> v.getValue() == wayPoint);
-      this.wayPoints.remove(wayPoint);
     }
+
+    this.wayPoints.clear();
   }
 
   private void displayWayPoint(final WayPoint wayPoint) {
