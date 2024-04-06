@@ -120,7 +120,6 @@ public class BingoListener {
 
     final Data data = goMod.getData();
 
-
     if (!data.getCloudType().equals("BINGO")) {
       if (game.getState() == State.ONLINE) {
         return;

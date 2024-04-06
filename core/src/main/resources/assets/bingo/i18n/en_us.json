@@ -31,6 +31,10 @@
       "manageKey": {
         "name": "Manage"
       },
+      "lastDeathKey": {
+        "name": "Show last death",
+        "text": "Death"
+      },
       "header": {
         "features": {
           "name": "Features"

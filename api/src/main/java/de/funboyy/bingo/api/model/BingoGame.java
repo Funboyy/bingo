@@ -11,15 +11,20 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.labymod.api.Laby;
+import net.labymod.api.client.Minecraft;
+import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.scoreboard.ScoreboardTeam;
+import net.labymod.api.client.world.ClientWorld;
+import net.labymod.api.util.I18n;
 
 public class BingoGame {
 
   private final Bingo<?> bingo;
   private final Set<BingoTeam> teams = new HashSet<>();
   private final BingoCard card = new BingoCard();
+  private BingoDeath death = null;
   private State state = State.OFFLINE;
   private boolean openedCard = false;
 
@@ -94,6 +99,19 @@ public class BingoGame {
     Scheduler.getInstance().schedule(() -> Laby.references().chatExecutor().chat("/bingo"), delay);
   }
 
+  public void handleDeath() {
+    final Minecraft minecraft = this.bingo.labyAPI().minecraft();
+    final ClientPlayer player = minecraft.getClientPlayer();
+    final ClientWorld world = minecraft.clientWorld();
+
+    if (player == null || world == null) {
+      return;
+    }
+
+    this.death = new BingoDeath(I18n.translate("bingo.settings.lastDeathKey.text"),
+        player.position(), world.dimension().getPath());
+  }
+
   public void addPlayersToTeams() {
     final ClientPacketListener packetListener = this.bingo.labyAPI().minecraft().getClientPacketListener();
 
@@ -144,6 +162,10 @@ public class BingoGame {
 
   public BingoCard getCard() {
     return this.card;
+  }
+
+  public BingoDeath getDeath() {
+    return this.death;
   }
 
   public State getState() {

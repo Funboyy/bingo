@@ -1,6 +1,7 @@
 package de.funboyy.bingo.core.waypoint;
 
 import de.funboyy.bingo.api.Bingo;
+import de.funboyy.bingo.api.model.BingoDeath;
 import de.funboyy.bingo.api.model.BingoTeam;
 import de.funboyy.bingo.api.waypoint.WayPoint;
 import de.funboyy.bingo.api.waypoint.WayPointService;
@@ -79,6 +80,7 @@ public class DefaultWayPointService implements WayPointService {
 
     final Key createKey = this.bingo.createKey();
     final Key manageKey = this.bingo.manageKey();
+    final Key lastDeathKey = this.bingo.lastDeathKey();
 
     if (createKey != Key.NONE && event.key() == createKey) {
       final WayPointNameActivity nameActivity = new WayPointNameActivity(this::placeWayPoint);
@@ -89,6 +91,19 @@ public class DefaultWayPointService implements WayPointService {
     if (manageKey != Key.NONE && event.key() == manageKey) {
       final WayPointManageActivity manageActivity = new WayPointManageActivity(this.wayPoints);
       this.minecraft.minecraftWindow().displayScreen(manageActivity);
+      return;
+    }
+
+    if (lastDeathKey != Key.NONE && event.key() == lastDeathKey) {
+      final BingoDeath death = this.bingo.getGame().getDeath();
+
+      if (death == null) {
+        return;
+      }
+
+      final WayPoint wayPoint = new DefaultWayPoint(death.name(), death.position(), death.dimension());
+      this.displayWayPoint(wayPoint);
+      this.sendLabyConnect(wayPoint);
     }
   }
 

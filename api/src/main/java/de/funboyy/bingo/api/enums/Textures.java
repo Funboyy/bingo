@@ -5,7 +5,7 @@ import net.labymod.api.client.resources.ResourceLocation;
 
 public enum Textures {
 
-  BINGO_CARD_ICON("bingo-card/icon.png"),
+  ICON("icon.png"),
   BINGO_CARD_BACKGROUND("bingo-card/background.png"),
   WAY_POINT_ICON("waypoint/icon.png");
 

@@ -86,6 +86,11 @@ public class BingoAddon extends Bingo<BingoConfiguration> {
   }
 
   @Override
+  public Key lastDeathKey() {
+    return this.configuration().lastDeathKey().get();
+  }
+
+  @Override
   public WayPointService getWayPointService() {
     return this.wayPointService;
   }

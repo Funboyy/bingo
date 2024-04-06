@@ -48,38 +48,47 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
     this.distance = 0f;
   }
 
+  @Override
   public boolean isOwn() {
     return this.own;
   }
 
+  @Override
   public String name() {
     return this.name;
   }
 
+  @Override
   public Component text() {
     return this.text;
   }
 
+  @Override
   public int color() {
     return this.color;
   }
 
+  @Override
   public FloatVector3 position() {
     return this.position;
   }
 
+  @Override
   public String dimension() {
     return this.dimension;
   }
 
+  @Override
   public void scale(final float scale) {
     this.scale = scale;
   }
 
+  @Override
   public void distance(final float distance) {
     this.distance = distance;
   }
 
+  @Override
   public float distance() {
     return this.distance;
   }

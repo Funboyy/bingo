@@ -46,13 +46,16 @@ public class BingoConfiguration extends AddonConfig {
   @KeyBindSetting
   private final ConfigProperty<Key> manageKey = new ConfigProperty<>(Key.NONE);
 
+  @KeyBindSetting
+  private final ConfigProperty<Key> lastDeathKey = new ConfigProperty<>(Key.NONE);
+
   @MethodOrder(after = "autoGG")
   @ButtonSetting
   public void refreshButton(final Setting setting) {
     Bingo.get().getWebAPI().load();
 
     final Notification notification = Notification.builder()
-        .icon(Textures.BINGO_CARD_ICON.getIcon())
+        .icon(Textures.ICON.getIcon())
         .title(Component.text("Bingo").decorate(TextDecoration.BOLD))
         .text(Component.translatable("bingo.settings.refreshButton.notification"))
         .build();
@@ -91,6 +94,10 @@ public class BingoConfiguration extends AddonConfig {
 
   public ConfigProperty<Key> manageKey() {
     return this.manageKey;
+  }
+
+  public ConfigProperty<Key> lastDeathKey() {
+    return this.lastDeathKey;
   }
 
 }

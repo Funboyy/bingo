@@ -44,7 +44,7 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
   @Override
   public void load(final HudWidgetConfig config) {
     super.load(config);
-    super.setIcon(Textures.BINGO_CARD_ICON.getIcon());
+    super.setIcon(Textures.ICON.getIcon());
   }
 
   @Override

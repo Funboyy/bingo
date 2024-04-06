@@ -33,6 +33,8 @@ public abstract class Bingo<T extends AddonConfig> extends LabyAddon<T> {
 
   public abstract Key manageKey();
 
+  public abstract Key lastDeathKey();
+
   public abstract WayPointService getWayPointService();
 
   public abstract BingoWebAPI getWebAPI();
