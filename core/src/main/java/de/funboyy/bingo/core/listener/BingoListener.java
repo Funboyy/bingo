@@ -132,15 +132,10 @@ public class BingoListener {
       return;
     }
 
-    if (game.getState() == State.FINISHED) {
-      final BingoGame newGame = new BingoGame(this.bingo);
-      newGame.setState(State.LOBBY);
+    final BingoGame newGame = new BingoGame(this.bingo);
+    newGame.setState(State.LOBBY);
 
-      this.bingo.setGame(newGame);
-      return;
-    }
-
-    game.setState(State.LOBBY);
+    this.bingo.setGame(newGame);
   }
 
 }

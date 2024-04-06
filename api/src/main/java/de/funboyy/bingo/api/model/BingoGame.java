@@ -100,6 +100,10 @@ public class BingoGame {
   }
 
   public void handleDeath() {
+    if (this.state != State.PLAYING) {
+      return;
+    }
+
     final Minecraft minecraft = this.bingo.labyAPI().minecraft();
     final ClientPlayer player = minecraft.getClientPlayer();
     final ClientWorld world = minecraft.clientWorld();
