@@ -112,6 +112,10 @@ public class BingoGame {
         player.position(), world.dimension().getPath());
   }
 
+  public void resetDeath() {
+    this.death = null;
+  }
+
   public void addPlayersToTeams() {
     final ClientPacketListener packetListener = this.bingo.labyAPI().minecraft().getClientPacketListener();
 

@@ -102,6 +102,7 @@ public class DefaultWayPointService implements WayPointService {
       }
 
       final WayPoint wayPoint = new DefaultWayPoint(death.name(), death.position(), death.dimension());
+      this.bingo.getGame().resetDeath();
       this.displayWayPoint(wayPoint);
       this.sendLabyConnect(wayPoint);
     }
