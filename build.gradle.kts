@@ -7,8 +7,6 @@ plugins {
 group = "org.example"
 version = "1.0.0"
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-
 labyMod {
     defaultPackageName = "de.funboyy.bingo" //change this to your main package name (used by all modules)
     addonInfo {
@@ -63,7 +61,7 @@ fun configureRun(provider: net.labymod.gradle.core.minecraft.provider.VersionPro
 
     provider.javaVersion = when (gameVersion) {
         else -> {
-            JavaVersion.VERSION_17
+            JavaVersion.VERSION_21
         }
     }
 
