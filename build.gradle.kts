@@ -14,7 +14,7 @@ labyMod {
         displayName = "Bingo"
         author = "Funboyy"
         description = "This addon improves some points for Bingo on GommeHD"
-        minecraftVersion = "1.20.1<1.20.4"
+        minecraftVersion = "1.20.1<1.20.5"
         version = System.getenv().getOrDefault("VERSION", "0.0.1")
     }
 
