@@ -33,8 +33,8 @@ import net.labymod.api.util.ThreadSafe;
 import net.labymod.api.util.math.vector.FloatVector3;
 import net.labymod.core.event.labymod.PacketAddonDevelopmentEvent;
 import net.labymod.core.labyconnect.protocol.packets.PacketAddonDevelopment;
-import net.labymod.serverapi.protocol.payload.io.PayloadReader;
-import net.labymod.serverapi.protocol.payload.io.PayloadWriter;
+import net.labymod.serverapi.api.payload.io.PayloadReader;
+import net.labymod.serverapi.api.payload.io.PayloadWriter;
 
 public class DefaultWayPointService implements WayPointService {
 
