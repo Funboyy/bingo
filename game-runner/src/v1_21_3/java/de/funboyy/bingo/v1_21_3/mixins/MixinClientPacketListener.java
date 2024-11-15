@@ -1,4 +1,4 @@
-package de.funboyy.bingo.v1_20_2.mixins;
+package de.funboyy.bingo.v1_21_3.mixins;
 
 import de.funboyy.bingo.api.Bingo;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPacketListener.class)
-public class ClientPacketListenerMixin {
+public class MixinClientPacketListener {
 
   @Inject(method = "handleRespawn", at = @At("HEAD"))
   public void bingo$handleRespawn(final ClientboundRespawnPacket packet, final CallbackInfo callbackInfo) {

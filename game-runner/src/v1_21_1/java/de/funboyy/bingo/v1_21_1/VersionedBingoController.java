@@ -1,4 +1,4 @@
-package de.funboyy.bingo.v1_20_2;
+package de.funboyy.bingo.v1_21_1;
 
 import de.funboyy.bingo.api.Bingo;
 import de.funboyy.bingo.api.BingoHelper;
@@ -35,7 +35,7 @@ public class VersionedBingoController implements BingoController {
       return;
     }
 
-    handleItems(
+    this.handleItems(
         Bingo.get().getGame(),
         BingoHelper.getPlainText(screen.getTitle()),
         containerMenu.getItems()
