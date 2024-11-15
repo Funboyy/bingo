@@ -2,6 +2,7 @@ import net.labymod.labygradle.common.extension.LabyModAnnotationProcessorExtensi
 
 dependencies {
     labyProcessor()
+    labyApi("core")
     api(project(":api"))
 }
 

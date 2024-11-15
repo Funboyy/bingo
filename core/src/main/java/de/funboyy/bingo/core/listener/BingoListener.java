@@ -16,7 +16,7 @@ import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.event.client.entity.player.inventory.InventorySetSlotEvent;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent.Side;
-import net.labymod.serverapi.protocol.payload.io.PayloadReader;
+import net.labymod.serverapi.api.payload.io.PayloadReader;
 
 public class BingoListener {
 
