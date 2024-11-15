@@ -59,7 +59,7 @@ public class BingoGame {
     }
 
     if (this.state == State.PLAYING) {
-      final Pattern pattern = Pattern.compile("^\\[Bingo] (.+) hat das Item (.+) gefunden$");
+      final Pattern pattern = Pattern.compile("^\\[Bingo] (.+) hat das Item (.+) gefunden(?: \\(\\+\\d+ xP\\))?$");
       final Matcher matcher = pattern.matcher(message);
 
       if (matcher.matches()) {
@@ -77,7 +77,7 @@ public class BingoGame {
         return;
       }
 
-      if (message.matches("^\\[Bingo] .+ hat Bingo gewonnen$")) {
+      if (message.matches("^\\[Bingo] .+ hat Bingo gewonnen(?: \\(\\+\\d+ xP\\))?$")) {
         this.setState(State.FINISHED);
 
         if (this.bingo.autoGG()) {
