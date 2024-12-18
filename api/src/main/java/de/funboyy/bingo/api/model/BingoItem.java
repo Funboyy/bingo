@@ -1,7 +1,7 @@
 package de.funboyy.bingo.api.model;
 
 import de.funboyy.bingo.api.Bingo;
-import de.funboyy.bingo.api.BingoHelper;
+import de.funboyy.bingo.api.BingoFlattener;
 import de.funboyy.bingo.api.enums.Difficulty;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class BingoItem {
   public BingoItem(final ItemStack itemStack) {
     this.itemStack = itemStack;
 
-    final String displayName = BingoHelper.getPlainText(this.itemStack.getDisplayName());
+    final String displayName = BingoFlattener.getPlainText(this.itemStack.getDisplayName());
     final Pattern pattern = Pattern.compile("^(.+) \\((.+)\\)$");
     final Matcher matcher = pattern.matcher(displayName);
 

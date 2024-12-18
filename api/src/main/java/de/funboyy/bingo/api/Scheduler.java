@@ -1,7 +1,8 @@
 package de.funboyy.bingo.api;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Scheduler {
 
@@ -15,17 +16,10 @@ public class Scheduler {
     return instance;
   }
 
+  private final ScheduledExecutorService service = Executors.newScheduledThreadPool(5);
+
   public void schedule(final Runnable runnable, final int delay) {
-    new Timer().schedule(new TimerTask() {
-      @Override
-      public void run() {
-        try {
-          runnable.run();
-        } catch (final Exception exception) {
-          throw new RuntimeException(exception);
-        }
-      }
-    }, delay);
+    this.service.schedule(runnable, delay, TimeUnit.MILLISECONDS);
   }
 
 }

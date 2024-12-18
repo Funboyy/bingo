@@ -1,10 +1,10 @@
 package de.funboyy.bingo.core.widget;
 
 import de.funboyy.bingo.api.Bingo;
-import de.funboyy.bingo.api.BingoHelper;
 import de.funboyy.bingo.api.enums.Textures;
 import de.funboyy.bingo.api.model.BingoCard;
 import de.funboyy.bingo.api.model.BingoGame;
+import de.funboyy.bingo.api.model.BingoIdentifier;
 import de.funboyy.bingo.api.model.BingoItem;
 import de.funboyy.bingo.api.model.BingoTeam;
 import net.labymod.api.Laby;
@@ -33,6 +33,7 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
       .renderPipeline().rectangleRenderer();
   private static final ItemStackRenderer ITEM_RENDERER = Laby.labyAPI()
       .minecraft().itemStackRenderer();
+  private static final int BEST_COLOR = Color.ofRGB(200, 250, 100).get();
 
   private final Bingo<?> bingo;
 
@@ -65,6 +66,7 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
       final boolean isEditorContext, final HudSize size) {
 
     final BingoCard card = this.bingo.getGame().getCard();
+    final int minSize = this.bingo.getGame().getMinSize();
 
     int x = PADDING;
     int y = PADDING;
@@ -76,47 +78,172 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
 
       if (this.bingo.highlight() && item.isHighlighted()) {
         RECTANGLE_RENDERER.renderRectangle(stack,
-            Rectangle.relative(x - 1, y - 1, 18, 18), BingoHelper.BEST.get());
+            Rectangle.relative(x - 1, y - 1, 18, 18), BEST_COLOR);
       }
 
       ITEM_RENDERER.renderItemStack(stack, item.getItemStack(), x, y, false);
 
       for (final BingoTeam team : item.getTeams()) {
-        final Color color = team.getColor();
+        final BingoIdentifier identifier = team.getIdentifier();
+        final int color = identifier.getColor();
 
-        if (color == null) {
+        if (identifier.getMinSize() > minSize) {
           continue;
         }
 
-        if (color.equals(BingoHelper.RED)) {
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-              y - 3, 9, 2), color.get());
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-              y - 3, 2, 9), color.get());
+        // Team Red - 2/3/4/8 Teams
+        if (identifier == BingoIdentifier.RED) {
+          if (minSize == 2) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y - 3, 22, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y - 3, 2, 9), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y - 3, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 3 || minSize == 4) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y - 3, 9, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y - 3, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y - 3, 5, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y - 3, 2, 5), color);
+            continue;
+          }
+
           continue;
         }
 
-        if (color.equals(BingoHelper.BLUE)) {
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 10,
-              y - 3, 9, 2), color.get());
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-              y - 3, 2, 9), color.get());
+        // Team Blue - 2/3/4/8 Teams
+        if (identifier == BingoIdentifier.BLUE) {
+          if (minSize == 2) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 17, 22, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 10, 2, 9), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y + 10, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 3 || minSize == 4) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 10,
+                y - 3, 9, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y - 3, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 4,
+                y - 3, 8, 2), color);
+            continue;
+          }
+
           continue;
         }
 
-        if (color.equals(BingoHelper.GREEN)) {
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 10,
-              y + 17, 9, 2), color.get());
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-              y + 10, 2, 9), color.get());
+        // Team Yellow - 3/4/8 Teams
+        if (identifier == BingoIdentifier.YELLOW) {
+          if (minSize == 3) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 17, 22, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 10, 2, 9), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y + 10, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 4) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 17, 9, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 10, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 14,
+                y - 3, 5, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y - 3, 2, 5), color);
+            continue;
+          }
+
           continue;
         }
 
-        if (color.equals(BingoHelper.YELLOW)) {
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-              y + 17, 9, 2), color.get());
-          RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-              y + 10, 2, 9), color.get());
+        // Team Green - 4/8 Teams
+        if (identifier == BingoIdentifier.GREEN) {
+          if (minSize == 4) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 10,
+                y + 17, 9, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y + 10, 2, 9), color);
+            continue;
+          }
+
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y + 4, 2, 8), color);
+            continue;
+          }
+
+          continue;
+        }
+
+        // Team Pink - 8 Teams
+        if (identifier == BingoIdentifier.PINK) {
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 14,
+                y + 17, 5, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
+                y + 14, 2, 5), color);
+            continue;
+          }
+
+          continue;
+        }
+
+        // Team Light Blue - 8 Teams
+        if (identifier == BingoIdentifier.LIGHT_BLUE) {
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 4,
+                y + 17, 8, 2), color);
+            continue;
+          }
+
+          continue;
+        }
+
+        // Team Orange - 8 Teams
+        if (identifier == BingoIdentifier.ORANGE) {
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 17, 5, 2), color);
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 14, 2, 5), color);
+            continue;
+          }
+
+          continue;
+        }
+
+        // Team Purple - 8 Teams
+        if (identifier == BingoIdentifier.PURPLE) {
+          if (minSize == 8) {
+            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
+                y + 4, 2, 8), color);
+          }
         }
       }
 

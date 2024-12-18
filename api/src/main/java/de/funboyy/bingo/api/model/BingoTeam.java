@@ -6,22 +6,16 @@ import net.labymod.api.util.Color;
 
 public class BingoTeam {
 
-  private final String name;
-  private final Color color;
+  private final BingoIdentifier identifier;
   private final Collection<String> entries;
 
-  public BingoTeam(final String name, final Color color) {
-    this.name = name;
-    this.color = color;
+  public BingoTeam(final BingoIdentifier identifier) {
+    this.identifier = identifier;
     this.entries = new HashSet<>();
   }
 
-  public String getName() {
-    return this.name;
-  }
-
-  public Color getColor() {
-    return this.color;
+  public BingoIdentifier getIdentifier() {
+    return this.identifier;
   }
 
   public Collection<String> getEntries() {

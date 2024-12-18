@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.funboyy.bingo.api.Bingo;
 import de.funboyy.bingo.api.Scheduler;
-import de.funboyy.bingo.api.controller.BingoController;
 import de.funboyy.bingo.api.enums.State;
 import de.funboyy.bingo.api.model.BingoGame;
 import de.funboyy.bingo.api.model.GoMod;
@@ -30,9 +29,9 @@ public class BingoListener {
 
   @Subscribe
   public void onChatReceive(final ChatReceiveEvent event) {
-   if (!this.bingo.isEnabled()) {
-     return;
-   }
+    if (!this.bingo.isEnabled()) {
+      return;
+    }
 
     final BingoGame game = this.bingo.getGame();
 
@@ -51,7 +50,7 @@ public class BingoListener {
 
     final BingoGame game = this.bingo.getGame();
 
-    if (game.getState() != State.PREPARATION) {
+    if (game.getState() != State.PREPARATION && game.getState() != State.PLAYING) {
       return;
     }
 
@@ -63,15 +62,7 @@ public class BingoListener {
       return;
     }
 
-    Scheduler.getInstance().schedule(() -> {
-      final BingoController controller = this.bingo.getController();
-
-      if (controller == null) {
-        return;
-      }
-
-      controller.registerItems();
-    }, 500);
+    Scheduler.getInstance().schedule(() -> this.bingo.getController().registerItems(), 500);
   }
 
   @Subscribe

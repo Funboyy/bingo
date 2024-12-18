@@ -1,10 +1,9 @@
 package de.funboyy.bingo.api.model;
 
 import de.funboyy.bingo.api.Bingo;
-import de.funboyy.bingo.api.BingoHelper;
+import de.funboyy.bingo.api.BingoFlattener;
 import de.funboyy.bingo.api.Scheduler;
 import de.funboyy.bingo.api.enums.State;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -27,6 +26,7 @@ public class BingoGame {
   private BingoDeath death = null;
   private State state = State.OFFLINE;
   private boolean openedCard = false;
+  private int minSize = 0;
 
   public BingoGame(final Bingo<?> bingo) {
     this.bingo = bingo;
@@ -45,12 +45,9 @@ public class BingoGame {
       if (message.matches("^\\[Bingo] Die Schutzzeit ist vorbei! Lasst die Kämpfe beginnen!$")) {
         this.setState(State.PLAYING);
 
-        this.teams.addAll(Arrays.asList(
-            new BingoTeam("Rot", BingoHelper.RED),
-            new BingoTeam("Blau", BingoHelper.BLUE),
-            new BingoTeam("Grün", BingoHelper.GREEN),
-            new BingoTeam("Gelb", BingoHelper.YELLOW)
-        ));
+        for (final BingoIdentifier identifier : BingoIdentifier.values()) {
+          this.teams.add(new BingoTeam(identifier));
+        }
 
         this.addPlayersToTeams();
       }
@@ -139,11 +136,17 @@ public class BingoGame {
       }
 
       final String name = playerInfo.profile().getUsername();
-      final String prefix = BingoHelper.getPlainText(scoreboardTeam.getPrefix());
+      final String prefix = BingoFlattener.getPlainText(scoreboardTeam.getPrefix());
 
       for (final BingoTeam team : this.teams) {
-        if (prefix.startsWith(team.getName()) && !team.hasEntry(name)) {
+        final BingoIdentifier identifier = team.getIdentifier();
+
+        if (prefix.startsWith(identifier.getName()) && !team.hasEntry(name)) {
           team.getEntries().add(name);
+
+          if (identifier.getMinSize() > this.minSize) {
+            this.minSize = identifier.getMinSize();
+          }
         }
       }
     }
@@ -162,7 +165,7 @@ public class BingoGame {
 
     if (!added) {
       this.addPlayersToTeams();
-      return getTeam(name, true);
+      return this.getTeam(name, true);
     }
 
     return null;
@@ -183,6 +186,10 @@ public class BingoGame {
   public void setState(final State state) {
     this.bingo.getWayPointService().removeWayPoints();
     this.state = state;
+  }
+
+  public int getMinSize() {
+    return this.minSize;
   }
 
 }

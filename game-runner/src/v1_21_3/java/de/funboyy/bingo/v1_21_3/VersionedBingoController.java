@@ -1,7 +1,7 @@
 package de.funboyy.bingo.v1_21_3;
 
 import de.funboyy.bingo.api.Bingo;
-import de.funboyy.bingo.api.BingoHelper;
+import de.funboyy.bingo.api.BingoFlattener;
 import de.funboyy.bingo.api.controller.BingoController;
 import javax.inject.Singleton;
 import net.labymod.api.models.Implements;
@@ -37,7 +37,7 @@ public class VersionedBingoController implements BingoController {
 
     this.handleItems(
         Bingo.get().getGame(),
-        BingoHelper.getPlainText(screen.getTitle()),
+        BingoFlattener.getPlainText(screen.getTitle()),
         containerMenu.getItems()
     );
   }

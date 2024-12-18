@@ -103,7 +103,7 @@ public class BingoAddon extends Bingo<BingoConfiguration> {
   @Override
   public BingoController getController() {
     final DefaultReferenceStorage referenceStorage = this.referenceStorageAccessor();
-    return referenceStorage.getBingoController();
+    return referenceStorage.bingoController();
   }
 
   @Override

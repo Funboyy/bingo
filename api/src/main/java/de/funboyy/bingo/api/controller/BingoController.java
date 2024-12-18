@@ -8,9 +8,9 @@ import de.funboyy.bingo.api.model.BingoItem;
 import java.util.List;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.reference.annotation.Referenceable;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-@Nullable
+@NotNull
 @Referenceable
 public interface BingoController {
 
