@@ -3,8 +3,10 @@ package de.funboyy.bingo.core.waypoint;
 import de.funboyy.bingo.api.Bingo;
 import de.funboyy.bingo.api.enums.Textures;
 import de.funboyy.bingo.api.waypoint.WayPoint;
+import java.util.Arrays;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.render.font.ComponentRenderer;
 import net.labymod.api.client.render.matrix.Stack;
@@ -86,6 +88,12 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
   @Override
   public void distance(final float distance) {
     this.distance = distance;
+
+    this.text.setChildren(Arrays.asList(
+       Component.text(" [", NamedTextColor.GRAY),
+       Component.text((int) this.distance + "m", NamedTextColor.WHITE),
+       Component.text("]", NamedTextColor.GRAY)
+    ));
   }
 
   @Override
