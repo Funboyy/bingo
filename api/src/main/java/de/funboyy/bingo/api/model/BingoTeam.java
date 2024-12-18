@@ -2,7 +2,6 @@ package de.funboyy.bingo.api.model;
 
 import java.util.Collection;
 import java.util.HashSet;
-import net.labymod.api.util.Color;
 
 public class BingoTeam {
 
