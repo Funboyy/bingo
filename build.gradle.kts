@@ -1,3 +1,5 @@
+import net.labymod.labygradle.common.extension.model.labymod.ReleaseChannels
+
 plugins {
     id("net.labymod.labygradle")
     id("net.labymod.labygradle.addon")
@@ -6,7 +8,7 @@ plugins {
 val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().split(";")
 
 group = "org.example"
-version = providers.environmentVariable("VERSION").getOrElse("1.0.7")
+version = providers.environmentVariable("VERSION").getOrElse("1.0.8-SNAPSHOT")
 
 labyMod {
     defaultPackageName = "de.funboyy.bingo"
@@ -28,6 +30,7 @@ labyMod {
         description = "This addon improves some points for Bingo on GommeHD"
         minecraftVersion = "1.21<1.21.4"
         version = rootProject.version.toString()
+        releaseChannel = ReleaseChannels.SNAPSHOT
     }
 }
 

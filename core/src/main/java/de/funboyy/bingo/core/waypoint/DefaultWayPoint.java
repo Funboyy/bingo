@@ -13,7 +13,7 @@ import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.client.world.MinecraftCamera;
 import net.labymod.api.client.world.object.AbstractWorldObject;
-import net.labymod.api.util.math.vector.FloatVector3;
+import net.labymod.api.util.math.vector.DoubleVector3;
 import org.jetbrains.annotations.NotNull;
 
 public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
@@ -25,26 +25,26 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
   private final String name;
   private final Component text;
   private final int color;
-  private final FloatVector3 position;
+  private final DoubleVector3 location;
   private final String dimension;
   private float scale;
   private float distance;
 
-  public DefaultWayPoint(final String name, final FloatVector3 location, final String dimension) {
+  public DefaultWayPoint(final String name, final DoubleVector3 location, final String dimension) {
     this(true, name, Bingo.get().color().get(), location, dimension);
   }
 
-  public DefaultWayPoint(final String name, final int color, final FloatVector3 location, final String dimension) {
+  public DefaultWayPoint(final String name, final int color, final DoubleVector3 location, final String dimension) {
     this(false, name, color, location, dimension);
   }
 
-  public DefaultWayPoint(final boolean own, final String name, final int color, final FloatVector3 location, final String dimension) {
+  public DefaultWayPoint(final boolean own, final String name, final int color, final DoubleVector3 location, final String dimension) {
     super(location);
     this.own = own;
     this.name = name;
     this.text = Component.text(name, TextColor.color(color));
     this.color = color;
-    this.position = location.copy();
+    this.location = location.copy();
     this.dimension = dimension;
     this.scale = 1f;
     this.distance = 0f;
@@ -71,8 +71,8 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
   }
 
   @Override
-  public FloatVector3 position() {
-    return this.position;
+  public DoubleVector3 origin() {
+    return this.location;
   }
 
   @Override
@@ -103,7 +103,7 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
 
   @Override
   public void renderInWorld(@NotNull final MinecraftCamera cam, @NotNull final Stack stack,
-      final float x, final float y, final float z, final float delta, final boolean darker) {
+      final double x, final double y, final double z, final float delta, final boolean darker) {
     if (!Bingo.get().wayPoints()) {
       return;
     }

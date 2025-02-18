@@ -110,7 +110,7 @@ public class BingoGame {
     }
 
     this.death = new BingoDeath(I18n.translate("bingo.settings.lastDeathKey.text"),
-        player.position(), world.dimension().getPath());
+        player.position().toDoubleVector3(), world.dimension().getPath());
   }
 
   public void resetDeath() {

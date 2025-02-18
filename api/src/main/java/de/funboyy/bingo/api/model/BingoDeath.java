@@ -1,7 +1,7 @@
 package de.funboyy.bingo.api.model;
 
-import net.labymod.api.util.math.vector.FloatVector3;
+import net.labymod.api.util.math.vector.DoubleVector3;
 
-public record BingoDeath(String name, FloatVector3 position, String dimension) {
+public record BingoDeath(String name, DoubleVector3 position, String dimension) {
 
 }

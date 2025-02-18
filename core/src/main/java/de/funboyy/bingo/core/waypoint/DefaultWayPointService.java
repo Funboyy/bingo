@@ -30,7 +30,7 @@ import net.labymod.api.labyconnect.LabyConnectSession;
 import net.labymod.api.user.GameUser;
 import net.labymod.api.user.GameUserService;
 import net.labymod.api.util.ThreadSafe;
-import net.labymod.api.util.math.vector.FloatVector3;
+import net.labymod.api.util.math.vector.DoubleVector3;
 import net.labymod.core.event.labymod.PacketAddonDevelopmentEvent;
 import net.labymod.core.labyconnect.protocol.packets.PacketAddonDevelopment;
 import net.labymod.serverapi.api.payload.io.PayloadReader;
@@ -74,9 +74,9 @@ public class DefaultWayPointService implements WayPointService {
       return;
     }
 
-    if (this.bingo.getGame().getState() != de.funboyy.bingo.api.enums.State.PLAYING) {
+    /*if (this.bingo.getGame().getState() != de.funboyy.bingo.api.enums.State.PLAYING) {
       return;
-    }
+    }*/
 
     final Key createKey = this.bingo.createKey();
     final Key manageKey = this.bingo.manageKey();
@@ -128,17 +128,17 @@ public class DefaultWayPointService implements WayPointService {
       return;
     }
 
-    final FloatVector3 playerPosition = player.position();
+    final DoubleVector3 playerPosition = player.position().toDoubleVector3();
 
     for (final WayPoint wayPoint : this.wayPoints) {
       if (!wayPoint.isOwn() && !this.bingo.showOthers()) {
         continue;
       }
 
-      final FloatVector3 distanceVector = new FloatVector3(
-          playerPosition.getX() - wayPoint.position().getX(),
-          playerPosition.getY() - wayPoint.position().getY(),
-          playerPosition.getZ() - wayPoint.position().getZ()
+      final DoubleVector3 distanceVector = new DoubleVector3(
+          playerPosition.getX() - wayPoint.origin().getX(),
+          playerPosition.getY() - wayPoint.origin().getY(),
+          playerPosition.getZ() - wayPoint.origin().getZ()
       );
 
       final float distance = (float) distanceVector.length();
@@ -151,20 +151,20 @@ public class DefaultWayPointService implements WayPointService {
 
       if (distance <= TARGET_DISTANCE) {
         wayPoint.scale(4f * (distance / TARGET_DISTANCE) + DEFAULT_SIZE);
-        wayPoint.location().set(wayPoint.position());
+        wayPoint.position().set(wayPoint.origin());
         continue;
       }
 
       wayPoint.scale(5f);
 
       final float normalizationFactor = TARGET_DISTANCE / distance;
-      final FloatVector3 newPosition = new FloatVector3(
+      final DoubleVector3 newPosition = new DoubleVector3(
           playerPosition.getX() - (distanceVector.getX() * normalizationFactor),
           playerPosition.getY() - (distanceVector.getY() * normalizationFactor),
           playerPosition.getZ() - (distanceVector.getZ() * normalizationFactor)
       );
 
-      wayPoint.location().set(newPosition);
+      wayPoint.position().set(newPosition);
     }
   }
 
@@ -190,11 +190,11 @@ public class DefaultWayPointService implements WayPointService {
     final String name = reader.readString();
     final int color = reader.readVarInt();
     final String dimension = reader.readString();
-    final float x = reader.readVarInt() + 0.5f;
-    final float y = reader.readVarInt() + 0.5f;
-    final float z = reader.readVarInt() + 0.5f;
+    final double x = reader.readVarInt() + 0.5;
+    final double y = reader.readVarInt() + 0.5;
+    final double z = reader.readVarInt() + 0.5;
 
-    final WayPoint wayPoint = new DefaultWayPoint(name, color, new FloatVector3(x, y, z), dimension);
+    final WayPoint wayPoint = new DefaultWayPoint(name, color, new DoubleVector3(x, y, z), dimension);
     this.displayWayPoint(wayPoint);
   }
 
@@ -277,9 +277,9 @@ public class DefaultWayPointService implements WayPointService {
     writer.writeString(wayPoint.name());
     writer.writeVarInt(wayPoint.color());
     writer.writeString(wayPoint.dimension());
-    writer.writeVarInt(floor(wayPoint.location().getX()));
-    writer.writeVarInt(floor(wayPoint.location().getY()));
-    writer.writeVarInt(floor(wayPoint.location().getZ()));
+    writer.writeVarInt(this.floor(wayPoint.origin().getX()));
+    writer.writeVarInt(this.floor(wayPoint.origin().getY()));
+    writer.writeVarInt(this.floor(wayPoint.origin().getZ()));
 
     session.sendAddonDevelopment(LABY_CONNECT_KEY, receivers.toArray(new UUID[0]), writer.toByteArray());
   }
@@ -292,11 +292,11 @@ public class DefaultWayPointService implements WayPointService {
       return null;
     }
 
-    final FloatVector3 location = player.position().copy();
+    final DoubleVector3 location = player.position().toDoubleVector3();
     location.set(
-        floor(location.getX()) + 0.5f,
-        floor(location.getY()) + 0.5f,
-        floor(location.getZ()) + 0.5f
+        this.floor(location.getX()) + 0.5,
+        this.floor(location.getY()) + 0.5,
+        this.floor(location.getZ()) + 0.5
     );
 
     return new DefaultWayPoint(name, location, world.dimension().getPath());
