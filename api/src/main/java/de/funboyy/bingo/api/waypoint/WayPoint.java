@@ -3,7 +3,6 @@ package de.funboyy.bingo.api.waypoint;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.world.object.WorldObject;
 import net.labymod.api.util.math.vector.DoubleVector3;
-import net.labymod.api.util.math.vector.FloatVector3;
 
 public interface WayPoint extends WorldObject {
 
