@@ -20,8 +20,8 @@ public interface WayPoint extends WorldObject {
 
   void scale(final float scale);
 
-  void distance(final float distance);
+  void distance(final double distance);
 
-  float distance();
+  double distance();
 
 }

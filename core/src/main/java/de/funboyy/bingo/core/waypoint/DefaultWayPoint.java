@@ -28,7 +28,7 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
   private final DoubleVector3 location;
   private final String dimension;
   private float scale;
-  private float distance;
+  private double distance;
 
   public DefaultWayPoint(final String name, final DoubleVector3 location, final String dimension) {
     this(true, name, Bingo.get().color().get(), location, dimension);
@@ -47,7 +47,7 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
     this.location = location.copy();
     this.dimension = dimension;
     this.scale = 1f;
-    this.distance = 0f;
+    this.distance = 0;
   }
 
   @Override
@@ -86,7 +86,7 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
   }
 
   @Override
-  public void distance(final float distance) {
+  public void distance(final double distance) {
     this.distance = distance;
 
     this.text.setChildren(Arrays.asList(
@@ -97,7 +97,7 @@ public class DefaultWayPoint extends AbstractWorldObject implements WayPoint {
   }
 
   @Override
-  public float distance() {
+  public double distance() {
     return this.distance;
   }
 

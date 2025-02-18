@@ -40,7 +40,7 @@ public class DefaultWayPointService implements WayPointService {
 
   private static final String LABY_CONNECT_KEY = "bingo:waypoint";
   private static final float DEFAULT_SIZE = 1f;
-  private static final float TARGET_DISTANCE = 75f;
+  private static final double TARGET_DISTANCE = 75;
 
   private final Bingo<?> bingo;
   private final LabyAPI labyAPI;
@@ -74,9 +74,9 @@ public class DefaultWayPointService implements WayPointService {
       return;
     }
 
-    /*if (this.bingo.getGame().getState() != de.funboyy.bingo.api.enums.State.PLAYING) {
+    if (this.bingo.getGame().getState() != de.funboyy.bingo.api.enums.State.PLAYING) {
       return;
-    }*/
+    }
 
     final Key createKey = this.bingo.createKey();
     final Key manageKey = this.bingo.manageKey();
@@ -141,7 +141,7 @@ public class DefaultWayPointService implements WayPointService {
           playerPosition.getZ() - wayPoint.origin().getZ()
       );
 
-      final float distance = (float) distanceVector.length();
+      final double distance = distanceVector.length();
 
       if (distance == wayPoint.distance()) {
         continue;
@@ -150,14 +150,14 @@ public class DefaultWayPointService implements WayPointService {
       wayPoint.distance(distance);
 
       if (distance <= TARGET_DISTANCE) {
-        wayPoint.scale(4f * (distance / TARGET_DISTANCE) + DEFAULT_SIZE);
+        wayPoint.scale(4f * (float) (distance / TARGET_DISTANCE) + DEFAULT_SIZE);
         wayPoint.position().set(wayPoint.origin());
         continue;
       }
 
       wayPoint.scale(5f);
 
-      final float normalizationFactor = TARGET_DISTANCE / distance;
+      final double normalizationFactor = TARGET_DISTANCE / distance;
       final DoubleVector3 newPosition = new DoubleVector3(
           playerPosition.getX() - (distanceVector.getX() * normalizationFactor),
           playerPosition.getY() - (distanceVector.getY() * normalizationFactor),
