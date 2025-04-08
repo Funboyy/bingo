@@ -8,6 +8,7 @@ import de.funboyy.bingo.api.enums.State;
 import de.funboyy.bingo.api.model.BingoGame;
 import de.funboyy.bingo.api.model.GoMod;
 import de.funboyy.bingo.api.model.GoMod.Data;
+import java.nio.charset.StandardCharsets;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
@@ -102,8 +103,13 @@ public class BingoListener {
       return;
     }
 
-    final PayloadReader reader = new PayloadReader(event.getPayload());
-    final GoMod goMod = GSON.fromJson(reader.readString(), GoMod.class);
+    String payload = new PayloadReader(event.getPayload()).readString();
+
+    if (!payload.startsWith("{") || !payload.endsWith("}")) {
+      payload = new String(event.getPayload(), StandardCharsets.UTF_8);
+    }
+
+    final GoMod goMod = GSON.fromJson(payload, GoMod.class);
 
     if (!goMod.getAction().equals("JOIN_SERVER") || goMod.getData() == null) {
       return;
