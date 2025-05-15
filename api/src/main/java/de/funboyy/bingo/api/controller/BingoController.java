@@ -23,7 +23,7 @@ public interface BingoController {
 
     final BingoCard card = game.getCard();
 
-    if (game.getState() != State.PREPARATION) {
+    if (game.getState() != State.PREPARATION && game.getState() != State.PLAYING) {
       return;
     }
 
@@ -34,6 +34,10 @@ public interface BingoController {
       }
 
       if (!(items.get(slot) instanceof ItemStack item)) {
+        continue;
+      }
+
+      if (item.isAir()) {
         continue;
       }
 

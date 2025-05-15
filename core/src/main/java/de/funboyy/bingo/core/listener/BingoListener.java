@@ -63,7 +63,7 @@ public class BingoListener {
       return;
     }
 
-    Scheduler.getInstance().schedule(() -> this.bingo.getController().registerItems(), 500);
+    Scheduler.getInstance().schedule(() -> this.bingo.getController().registerItems(), 1_000);
   }
 
   @Subscribe

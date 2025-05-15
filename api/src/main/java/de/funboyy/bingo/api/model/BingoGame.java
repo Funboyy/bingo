@@ -78,7 +78,7 @@ public class BingoGame {
         this.setState(State.FINISHED);
 
         if (this.bingo.autoGG()) {
-          final int delay = new Random().nextInt(150) * 10;
+          final int delay = (new Random().nextInt(100) * 10) + 250;
           Scheduler.getInstance().schedule(() -> Laby.references().chatExecutor().chat("gg"), delay);
         }
       }
@@ -92,7 +92,7 @@ public class BingoGame {
 
     this.openedCard = true;
 
-    final int delay = (new Random().nextInt(150) + 150) * 10;
+    final int delay = (new Random().nextInt(100) * 10) + 3_000;
     Scheduler.getInstance().schedule(() -> Laby.references().chatExecutor().chat("/bingo"), delay);
   }
 
