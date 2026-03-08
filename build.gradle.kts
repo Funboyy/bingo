@@ -6,7 +6,7 @@ plugins {
 val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().split(";")
 
 group = "org.example"
-version = providers.environmentVariable("VERSION").getOrElse("1.0.10")
+version = providers.environmentVariable("VERSION").getOrElse("1.0.11")
 
 labyMod {
     defaultPackageName = "de.funboyy.bingo"
@@ -26,7 +26,7 @@ labyMod {
         displayName = "Bingo"
         author = "Funboyy"
         description = "This addon improves some points for Bingo on GommeHD"
-        minecraftVersion = "1.21.4<1.21.5"
+        minecraftVersion = "1.21.11"
         version = rootProject.version.toString()
     }
 }

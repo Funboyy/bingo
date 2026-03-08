@@ -11,7 +11,7 @@ import net.labymod.api.Laby;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.widget.WidgetHudWidget;
 import net.labymod.api.client.gui.hud.position.HudSize;
-import net.labymod.api.client.gui.mouse.MutableMouse;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.hud.HudWidgetWidget;
@@ -62,9 +62,8 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
   }
 
   @Override
-  public void render(final Stack stack, final MutableMouse mouse, final float partialTicks,
-      final boolean isEditorContext, final HudSize size) {
-
+  public void render(final ScreenContext context, final boolean isEditorContext, final HudSize size) {
+    final Stack stack = context.stack();
     final BingoCard card = this.bingo.getGame().getCard();
     final int minSize = this.bingo.getGame().getMinSize();
 

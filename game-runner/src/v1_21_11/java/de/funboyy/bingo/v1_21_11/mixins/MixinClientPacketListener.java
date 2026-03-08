@@ -1,4 +1,4 @@
-package de.funboyy.bingo.v1_21_4.mixins;
+package de.funboyy.bingo.v1_21_11.mixins;
 
 import de.funboyy.bingo.api.Bingo;
 import net.minecraft.client.multiplayer.ClientPacketListener;

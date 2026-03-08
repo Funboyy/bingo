@@ -1,4 +1,4 @@
-package de.funboyy.bingo.v1_21_5;
+package de.funboyy.bingo.v1_21_11;
 
 import de.funboyy.bingo.api.Bingo;
 import de.funboyy.bingo.api.BingoFlattener;
