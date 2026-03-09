@@ -13,15 +13,14 @@ import net.labymod.api.client.gui.hud.hudwidget.widget.WidgetHudWidget;
 import net.labymod.api.client.gui.hud.position.HudSize;
 import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.state.ScreenCanvas;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.hud.HudWidgetWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 import net.labymod.api.client.render.ItemStackRenderer;
-import net.labymod.api.client.render.draw.RectangleRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.util.Color;
-import net.labymod.api.util.bounds.Rectangle;
 
 @Link("bingo.lss")
 public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
@@ -29,8 +28,6 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
   private static final int PADDING = 10;
   private static final int SPACING = 23;
   private static final int MAX_SIZE = 128;
-  private static final RectangleRenderer RECTANGLE_RENDERER = Laby.references()
-      .renderPipeline().rectangleRenderer();
   private static final ItemStackRenderer ITEM_RENDERER = Laby.labyAPI()
       .minecraft().itemStackRenderer();
   private static final int BEST_COLOR = Color.ofRGB(200, 250, 100).get();
@@ -64,6 +61,8 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
   @Override
   public void render(final ScreenContext context, final boolean isEditorContext, final HudSize size) {
     final Stack stack = context.stack();
+    final ScreenCanvas canvas = context.canvas();
+
     final BingoCard card = this.bingo.getGame().getCard();
     final int minSize = this.bingo.getGame().getMinSize();
 
@@ -76,8 +75,7 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
       }
 
       if (this.bingo.highlight() && item.isHighlighted()) {
-        RECTANGLE_RENDERER.renderRectangle(stack,
-            Rectangle.relative(x - 1, y - 1, 18, 18), BEST_COLOR);
+        canvas.submitRelativeRect(x - 1F, y - 1F, 18F, 18F, BEST_COLOR);
       }
 
       ITEM_RENDERER.renderItemStack(stack, item.getItemStack(), x, y, false);
@@ -93,28 +91,21 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Red - 2/3/4/8 Teams
         if (identifier == BingoIdentifier.RED) {
           if (minSize == 2) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y - 3, 22, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y - 3, 2, 9), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y - 3, 2, 9), color);
+            canvas.submitRelativeRect(x - 3F, y - 3F, 22F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y - 3F, 2F, 9F, color);
+            canvas.submitRelativeRect(x + 17F, y - 3F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 3 || minSize == 4) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y - 3, 9, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y - 3, 2, 9), color);
+            canvas.submitRelativeRect(x - 3F, y - 3F, 9F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y - 3F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y - 3, 5, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y - 3, 2, 5), color);
+            canvas.submitRelativeRect(x - 3F, y - 3F, 5F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y - 3F, 2F, 5F, color);
             continue;
           }
 
@@ -124,26 +115,20 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Blue - 2/3/4/8 Teams
         if (identifier == BingoIdentifier.BLUE) {
           if (minSize == 2) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 17, 22, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 10, 2, 9), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y + 10, 2, 9), color);
+            canvas.submitRelativeRect(x - 3F, y + 17F, 22F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y + 10F, 2F, 9F, color);
+            canvas.submitRelativeRect(x + 17F, y + 10F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 3 || minSize == 4) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 10,
-                y - 3, 9, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y - 3, 2, 9), color);
+            canvas.submitRelativeRect(x + 10F, y - 3F, 9F, 2F, color);
+            canvas.submitRelativeRect(x + 17F, y - 3F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 4,
-                y - 3, 8, 2), color);
+            canvas.submitRelativeRect(x + 4F, y - 3F, 8F, 2F, color);
             continue;
           }
 
@@ -153,28 +138,21 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Yellow - 3/4/8 Teams
         if (identifier == BingoIdentifier.YELLOW) {
           if (minSize == 3) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 17, 22, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 10, 2, 9), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y + 10, 2, 9), color);
+            canvas.submitRelativeRect(x - 3F, y + 17F, 22F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y + 10F, 2F, 9F, color);
+            canvas.submitRelativeRect(x + 17F, y + 10F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 4) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 17, 9, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 10, 2, 9), color);
+            canvas.submitRelativeRect(x - 3F, y + 17F, 9F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y + 10F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 14,
-                y - 3, 5, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y - 3, 2, 5), color);
+            canvas.submitRelativeRect(x + 14F, y - 3F, 5F, 2F, color);
+            canvas.submitRelativeRect(x + 17F, y - 3F, 2F, 5F, color);
             continue;
           }
 
@@ -184,16 +162,13 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Green - 4/8 Teams
         if (identifier == BingoIdentifier.GREEN) {
           if (minSize == 4) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 10,
-                y + 17, 9, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y + 10, 2, 9), color);
+            canvas.submitRelativeRect(x + 10F, y + 17F, 9F, 2F, color);
+            canvas.submitRelativeRect(x + 17F, y + 10F, 2F, 9F, color);
             continue;
           }
 
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y + 4, 2, 8), color);
+            canvas.submitRelativeRect(x + 17F, y + 4F, 2F, 8F, color);
             continue;
           }
 
@@ -203,10 +178,8 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Pink - 8 Teams
         if (identifier == BingoIdentifier.PINK) {
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 14,
-                y + 17, 5, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 17,
-                y + 14, 2, 5), color);
+            canvas.submitRelativeRect(x + 14F, y + 17F, 5F, 2F, color);
+            canvas.submitRelativeRect(x + 17F, y + 14F, 2F, 5F, color);
             continue;
           }
 
@@ -216,8 +189,7 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Light Blue - 8 Teams
         if (identifier == BingoIdentifier.LIGHT_BLUE) {
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x + 4,
-                y + 17, 8, 2), color);
+            canvas.submitRelativeRect(x + 4F, y + 17F, 8F, 2F, color);
             continue;
           }
 
@@ -227,10 +199,8 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Orange - 8 Teams
         if (identifier == BingoIdentifier.ORANGE) {
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 17, 5, 2), color);
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 14, 2, 5), color);
+            canvas.submitRelativeRect(x - 3F, y + 17F, 5F, 2F, color);
+            canvas.submitRelativeRect(x - 3F, y + 14F, 2F, 5F, color);
             continue;
           }
 
@@ -240,8 +210,7 @@ public class BingoWidget extends WidgetHudWidget<HudWidgetConfig> {
         // Team Purple - 8 Teams
         if (identifier == BingoIdentifier.PURPLE) {
           if (minSize == 8) {
-            RECTANGLE_RENDERER.renderRectangle(stack, Rectangle.relative(x - 3,
-                y + 4, 2, 8), color);
+            canvas.submitRelativeRect(x - 3F, y + 4F, 2F, 8F, color);
           }
         }
       }
