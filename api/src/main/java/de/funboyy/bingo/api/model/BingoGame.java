@@ -17,6 +17,7 @@ import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.scoreboard.ScoreboardTeam;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.I18n;
+import net.labymod.api.util.time.TimeUtil;
 
 public class BingoGame {
 
@@ -27,6 +28,10 @@ public class BingoGame {
   private State state = State.OFFLINE;
   private boolean openedCard = false;
   private int minSize = 0;
+
+  // the payload is received before the server switch is triggered,
+  // so we need to check if the last change was recently or not
+  private long lastChangedAt = 0L;
 
   public BingoGame(final Bingo<?> bingo) {
     this.bingo = bingo;
@@ -186,6 +191,11 @@ public class BingoGame {
   public void setState(final State state) {
     this.bingo.getWayPointService().removeWayPoints();
     this.state = state;
+    this.lastChangedAt = TimeUtil.getCurrentTimeMillis();
+  }
+
+  public boolean shouldUpdateState() {
+    return TimeUtil.getCurrentTimeMillis() - this.lastChangedAt > 250L;
   }
 
   public int getMinSize() {

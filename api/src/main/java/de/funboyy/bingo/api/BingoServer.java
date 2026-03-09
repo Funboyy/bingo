@@ -16,9 +16,27 @@ public class BingoServer extends AbstractServer {
 
   @Override
   public void loginOrSwitch(final LoginPhase phase) {
+    final BingoGame game = this.bingo.getGame();
+
     if (phase == LoginPhase.LOGIN) {
-      this.bingo.getGame().setState(State.ONLINE);
+      game.setState(State.ONLINE);
+      return;
     }
+
+    if (game.getState() == State.ONLINE) {
+      return;
+    }
+
+    // the payload is received before this is triggered,
+    // so we need to check if it was recently or not
+    if (game.getState() == State.LOBBY && !game.shouldUpdateState()) {
+      return;
+    }
+
+    final BingoGame newGame = new BingoGame(this.bingo);
+    newGame.setState(State.ONLINE);
+
+    this.bingo.setGame(newGame);
   }
 
   @Override

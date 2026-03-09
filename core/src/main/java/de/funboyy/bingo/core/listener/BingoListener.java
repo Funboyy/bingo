@@ -29,7 +29,7 @@ public class BingoListener {
   }
 
   @Subscribe
-  public void onChatReceive(final ChatReceiveEvent event) {
+  public void handleChatReceive(final ChatReceiveEvent event) {
     if (!this.bingo.isEnabled()) {
       return;
     }
@@ -44,7 +44,7 @@ public class BingoListener {
   }
 
   @Subscribe
-  public void onChatSend(final ChatMessageSendEvent event) {
+  public void handleChatSend(final ChatMessageSendEvent event) {
     if (!this.bingo.isEnabled()) {
       return;
     }
@@ -67,7 +67,7 @@ public class BingoListener {
   }
 
   @Subscribe
-  public void onInventoryUpdate(final InventorySetSlotEvent event) {
+  public void handleInventoryUpdate(final InventorySetSlotEvent event) {
     if (!this.bingo.isEnabled()) {
       return;
     }
@@ -82,7 +82,7 @@ public class BingoListener {
   }
 
   @Subscribe
-  public void onPayload(final NetworkPayloadEvent event) {
+  public void handlePayload(final NetworkPayloadEvent event) {
     if (!this.bingo.isEnabled()) {
       return;
     }
@@ -118,14 +118,6 @@ public class BingoListener {
     final Data data = goMod.getData();
 
     if (!data.getCloudType().equals("BINGO")) {
-      if (game.getState() == State.ONLINE) {
-        return;
-      }
-
-      final BingoGame newGame = new BingoGame(this.bingo);
-      newGame.setState(State.ONLINE);
-
-      this.bingo.setGame(newGame);
       return;
     }
 
